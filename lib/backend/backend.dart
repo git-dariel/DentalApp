@@ -42,6 +42,12 @@ Future<int> queryUsersRecordCount({
       limit: limit,
     );
 
+Stream<List<AppointmentsRecord>> queryAppointmentsRecordForEmail(String email) {
+  return queryAppointmentsRecord(
+    queryBuilder: (query) => query.where('appointmentEmail', isEqualTo: email),
+  );
+}
+
 Stream<List<UsersRecord>> queryUsersRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
@@ -83,14 +89,15 @@ Stream<List<AppointmentsRecord>> queryAppointmentsRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
-}) =>
-    queryCollection(
-      AppointmentsRecord.collection,
-      AppointmentsRecord.fromSnapshot,
-      queryBuilder: queryBuilder,
-      limit: limit,
-      singleRecord: singleRecord,
-    );
+}) {
+  final builder = queryBuilder ?? (q) => q;
+  var query = builder(AppointmentsRecord.collection);
+  if (limit > 0 || singleRecord) {
+    query = query.limit(singleRecord ? 1 : limit);
+  }
+  return query.snapshots().map(
+      (s) => s.docs.map((d) => AppointmentsRecord.fromSnapshot(d)).toList());
+}
 
 Future<List<AppointmentsRecord>> queryAppointmentsRecordOnce({
   Query Function(Query)? queryBuilder,

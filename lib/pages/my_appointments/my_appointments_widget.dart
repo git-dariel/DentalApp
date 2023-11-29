@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
+import 'package:stardent/pages/history/medical_history.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -90,7 +91,21 @@ class _MyAppointmentsWidgetState extends State<MyAppointmentsWidget> {
           'Appointments',
           style: FlutterFlowTheme.of(context).displaySmall,
         ),
-        actions: [],
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MedicalHistory()),
+              );
+            },
+            icon: Icon(
+              Icons.history_rounded,
+              color: FlutterFlowTheme.of(context).primary,
+              size: 30.0,
+            ),
+          ),
+        ],
         centerTitle: false,
         elevation: 0.0,
       ),
