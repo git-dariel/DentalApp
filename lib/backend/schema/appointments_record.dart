@@ -45,6 +45,10 @@ class AppointmentsRecord extends FirestoreRecord {
   String get appointmentEmail => _appointmentEmail ?? '';
   bool hasAppointmentEmail() => _appointmentEmail != null;
 
+  String? _appoinmentSlot;
+  String get appointmentSlot => _appoinmentSlot ?? '';
+  bool hasAppointmentSlot() => _appoinmentSlot != null;
+
   // "email" field.
   String? _email;
   String get email => _email ?? '';
@@ -93,6 +97,7 @@ class AppointmentsRecord extends FirestoreRecord {
     _appointmentTime = snapshotData['appointmentTime'] as DateTime?;
     _appointmentType = snapshotData['appointmentType'] as String?;
     _appointmentEmail = snapshotData['appointmentEmail'] as String?;
+    _appoinmentSlot = snapshotData['appointmentSlot'] as String?;
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
@@ -152,6 +157,7 @@ Map<String, dynamic> createAppointmentsRecordData({
   String? phoneNumber,
   bool? upcoming,
   bool? complete,
+  String? appointmentSlot,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -161,6 +167,7 @@ Map<String, dynamic> createAppointmentsRecordData({
       'appointmentTime': appointmentTime,
       'appointmentType': appointmentType,
       'appointmentEmail': appointmentEmail,
+      'appointmentSlot': appointmentSlot,
       'email': email,
       'display_name': displayName,
       'photo_url': photoUrl,

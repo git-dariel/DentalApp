@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stardent/backend/backend.dart';
-import 'package:stardent/auth/base_auth_user_provider.dart';
 import 'package:intl/intl.dart';
 
 String formatDateTimeTo12Hour(DateTime? dateTime) {
@@ -10,24 +9,14 @@ String formatDateTimeTo12Hour(DateTime? dateTime) {
   return DateFormat('MM/dd/yyyy hh:mm a').format(dateTime);
 }
 
-class MedicalHistory extends StatefulWidget {
-  const MedicalHistory({Key? key}) : super(key: key);
+class MedicalHistoryAdmin extends StatefulWidget {
+  const MedicalHistoryAdmin({Key? key}) : super(key: key);
 
   @override
-  State<MedicalHistory> createState() => _MedicalHistoryState();
+  State<MedicalHistoryAdmin> createState() => _MedicalHistoryAdminState();
 }
 
-class _MedicalHistoryState extends State<MedicalHistory> {
-  Stream<List<AppointmentsRecord>> getUserAppointments() {
-    String? email = currentUser?.email;
-    if (email != null) {
-      return queryAppointmentsRecordForEmail(email);
-    } else {
-      // Handle the case where the user is not logged in
-      throw Exception('User is not logged in');
-    }
-  }
-
+class _MedicalHistoryAdminState extends State<MedicalHistoryAdmin> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +27,7 @@ class _MedicalHistoryState extends State<MedicalHistory> {
         title: const Text("Medical History"),
       ),
       body: StreamBuilder<List<AppointmentsRecord>>(
-        stream: getUserAppointments(),
+        stream: queryAppointmentsRecord(),
         builder: (BuildContext context,
             AsyncSnapshot<List<AppointmentsRecord>> snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {

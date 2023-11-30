@@ -691,13 +691,15 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                                           .doc()
                                           .set(createAppointmentsRecordData(
                                             appointmentType:
-                                                _model.dropDownValue2,
+                                                _model.dropDownValue1,
                                             appointmentTime: _model.datePicked,
                                             appointmentName: _model
                                                 .personsNameController.text,
                                             appointmentEmail: currentUserEmail,
                                             appointmentPerson:
                                                 currentUserReference,
+                                            appointmentSlot:
+                                                _model.dropDownValue2,
                                           ));
                                       Navigator.push(
                                         context,
