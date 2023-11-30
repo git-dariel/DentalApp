@@ -19,6 +19,9 @@ import 'book_appointment_model.dart';
 
 export 'book_appointment_model.dart';
 
+final DateTime now = DateTime.now();
+final DateTime firstDate = now;
+
 class BookAppointmentWidget extends StatefulWidget {
   const BookAppointmentWidget({
     Key? key,
@@ -453,28 +456,16 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                                   final _datePickedDate = await showDatePicker(
                                     context: context,
                                     initialDate: getCurrentTimestamp,
-                                    firstDate: DateTime(1900),
+                                    firstDate: firstDate,
                                     lastDate: DateTime(2050),
                                   );
 
-                                  TimeOfDay? _datePickedTime;
                                   if (_datePickedDate != null) {
-                                    _datePickedTime = await showTimePicker(
-                                      context: context,
-                                      initialTime: TimeOfDay.fromDateTime(
-                                          getCurrentTimestamp),
-                                    );
-                                  }
-
-                                  if (_datePickedDate != null &&
-                                      _datePickedTime != null) {
                                     safeSetState(() {
                                       _model.datePicked = DateTime(
                                         _datePickedDate.year,
                                         _datePickedDate.month,
                                         _datePickedDate.day,
-                                        _datePickedTime!.hour,
-                                        _datePickedTime.minute,
                                       );
                                     });
                                   }
@@ -543,20 +534,6 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                                                                         context)
                                                                     .primaryText,
                                                               ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(5.0, 4.0,
-                                                                0.0, 0.0),
-                                                    child: Text(
-                                                      dateTimeFormat('jm',
-                                                          _model.datePicked),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMedium,
                                                     ),
                                                   ),
                                                 ],

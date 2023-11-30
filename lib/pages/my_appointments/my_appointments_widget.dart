@@ -207,7 +207,7 @@ class _MyAppointmentsWidgetState extends State<MyAppointmentsWidget> {
                               },
                               child: Container(
                                 width: MediaQuery.sizeOf(context).width * 1.0,
-                                height: 110.0,
+                                height: 118.0,
                                 decoration: BoxDecoration(
                                   color: FlutterFlowTheme.of(context)
                                       .secondaryBackground,
@@ -315,16 +315,12 @@ class _MyAppointmentsWidgetState extends State<MyAppointmentsWidget> {
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(4.0, 0.0,
                                                                 0.0, 0.0),
-                                                    child: Text(
-                                                      dateTimeFormat(
-                                                          'jm',
-                                                          appointmentCardAppointmentsRecord
-                                                              .appointmentTime!),
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodySmall,
-                                                    ),
+                                                  ),
+                                                  Text(
+                                                    '/ ${appointmentCardAppointmentsRecord.appointmentSlot}', // Replace with the actual field for created time
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium, // Adjust the style as needed
                                                   ),
                                                 ],
                                               ),

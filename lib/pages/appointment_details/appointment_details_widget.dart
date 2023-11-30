@@ -309,17 +309,18 @@ class _AppointmentDetailsWidgetState extends State<AppointmentDetailsWidget> {
                                   .appointmentTime!),
                           style: FlutterFlowTheme.of(context).displaySmall,
                         ),
+                        SizedBox(
+                          width: 15,
+                        ),
+                        Text(
+                          '${appointmentDetailsAppointmentsRecord.appointmentSlot}', // Replace with the actual field for created time
+                          style: FlutterFlowTheme.of(context)
+                              .bodyMedium, // Adjust the style as needed
+                        ),
                         Expanded(
                           child: Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
                                 4.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              dateTimeFormat(
-                                  'jm',
-                                  appointmentDetailsAppointmentsRecord
-                                      .appointmentTime!),
-                              style: FlutterFlowTheme.of(context).displaySmall,
-                            ),
                           ),
                         ),
                       ],

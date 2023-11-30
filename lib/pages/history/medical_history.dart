@@ -7,11 +7,11 @@ String formatDateTimeTo12Hour(DateTime? dateTime) {
   if (dateTime == null) {
     return 'N/A';
   }
-  return DateFormat('MM/dd/yyyy hh:mm a').format(dateTime);
+  return DateFormat('MM/dd/yyyy').format(dateTime);
 }
 
 class MedicalHistory extends StatefulWidget {
-  const MedicalHistory({Key? key}) : super(key: key);
+  const MedicalHistory({super.key});
 
   @override
   State<MedicalHistory> createState() => _MedicalHistoryState();
@@ -61,10 +61,9 @@ class _MedicalHistoryState extends State<MedicalHistory> {
                         subtitle: Text(record.appointmentName),
                       ),
                       ListTile(
-                        title: Text('Appointment Date/Time'),
+                        title: Text('Appointment Date'),
                         subtitle: Text(
-                            formatDateTimeTo12Hour(record.appointmentTime) ??
-                                'N/A'),
+                            formatDateTimeTo12Hour(record.appointmentTime)),
                       ),
                       ListTile(
                         title: Text('Appointment Type'),
