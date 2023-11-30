@@ -11,6 +11,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'edit_booking_model.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 export 'edit_booking_model.dart';
 
@@ -202,46 +203,26 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 16.0, 0.0, 0.0),
-                          child: FlutterFlowDropDown<String>(
-                            controller: _model.dropDownValueController ??=
-                                FormFieldController<String>(
-                              _model.dropDownValue ??=
-                                  widget.userAppointment?.appointmentType,
-                            ),
-                            options: [
+                          child: MultiSelectDialogField(
+                            items: [
                               'Implants',
                               'Whitening',
                               'Braces',
                               'Scaling'
-                            ],
-                            onChanged: (val) =>
-                                setState(() => _model.dropDownValue = val),
-                            width: MediaQuery.sizeOf(context).width * 0.9,
-                            height: 60.0,
-                            textStyle: FlutterFlowTheme.of(context)
-                                .titleMedium
-                                .override(
-                                  fontFamily: 'Outfit',
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                ),
-                            icon: Icon(
-                              Icons.keyboard_arrow_down_rounded,
-                              color: FlutterFlowTheme.of(context).grayLight,
-                              size: 15.0,
+                            ].map((e) => MultiSelectItem(e, e)).toList(),
+                            title: const Text(
+                              "Services",
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
                             ),
-                            fillColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            elevation: 3.0,
-                            borderColor:
-                                FlutterFlowTheme.of(context).primaryBackground,
-                            borderWidth: 2.0,
-                            borderRadius: 8.0,
-                            margin: EdgeInsetsDirectional.fromSTEB(
-                                20.0, 4.0, 16.0, 4.0),
-                            hidesUnderline: true,
-                            isSearchable: false,
-                            isMultiSelect: false,
+                            selectedColor: Colors.blue,
+                            backgroundColor: Colors.white,
+                            onConfirm: (values) {
+                              setState(() {
+                                _model.dropDownValue = values.join(', ');
+                              });
+                            },
                           ),
                         ),
                         Padding(
@@ -260,24 +241,12 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
                                 lastDate: DateTime(2050),
                               );
 
-                              TimeOfDay? _datePickedTime;
                               if (_datePickedDate != null) {
-                                _datePickedTime = await showTimePicker(
-                                  context: context,
-                                  initialTime: TimeOfDay.fromDateTime(
-                                      getCurrentTimestamp),
-                                );
-                              }
-
-                              if (_datePickedDate != null &&
-                                  _datePickedTime != null) {
                                 safeSetState(() {
                                   _model.datePicked = DateTime(
                                     _datePickedDate.year,
                                     _datePickedDate.month,
                                     _datePickedDate.day,
-                                    _datePickedTime!.hour,
-                                    _datePickedTime.minute,
                                   );
                                 });
                               }
@@ -357,24 +326,6 @@ class _EditBookingWidgetState extends State<EditBookingWidget> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
                                                         2.0, 4.0, 0.0, 0.0),
-                                                child: Text(
-                                                  dateTimeFormat(
-                                                      'jm',
-                                                      widget.userAppointment!
-                                                          .appointmentTime!),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall
-                                                      .override(
-                                                        fontFamily: 'Outfit',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .tertiary,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                      ),
-                                                ),
                                               ),
                                             ],
                                           ),
