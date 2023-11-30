@@ -12,7 +12,7 @@ class BookAppointmentModel extends FlutterFlowModel<BookAppointmentWidget> {
   TextEditingController? personsNameController;
   String? Function(BuildContext, String?)? personsNameControllerValidator;
   // State field(s) for DropDown widget.
-  String? dropDownValue1;
+  List<String> dropDownValue1 = [];
   FormFieldController<String>? dropDownValueController1;
   DateTime? datePicked;
   // State field(s) for DropDown widget.

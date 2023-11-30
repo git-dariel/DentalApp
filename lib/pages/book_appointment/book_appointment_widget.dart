@@ -16,6 +16,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/form_field_controller.dart';
 import 'book_appointment_model.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
 
 export 'book_appointment_model.dart';
 
@@ -403,46 +404,27 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 16.0, 0.0, 0.0),
-                              child: FlutterFlowDropDown<String>(
-                                controller: _model.dropDownValueController1 ??=
-                                    FormFieldController<String>(null),
-                                options: [
+                              child: MultiSelectDialogField(
+                                items: [
                                   'Implants',
                                   'Whitening',
                                   'Braces',
                                   'Scaling'
-                                ],
-                                onChanged: (val) =>
-                                    setState(() => _model.dropDownValue1 = val),
-                                width: MediaQuery.sizeOf(context).width * 0.9,
-                                height: 60.0,
-                                textStyle: FlutterFlowTheme.of(context)
-                                    .titleSmall
-                                    .override(
-                                      fontFamily: 'Outfit',
-                                      color: FlutterFlowTheme.of(context)
-                                          .primaryText,
-                                    ),
-                                hintText: 'Services',
-                                icon: Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: FlutterFlowTheme.of(context).grayLight,
-                                  size: 15.0,
+                                ].map((e) => MultiSelectItem(e, e)).toList(),
+                                title: const Text(
+                                  "Services",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                                fillColor: FlutterFlowTheme.of(context)
-                                    .primaryBackground,
-                                elevation: 3.0,
-                                borderColor:
-                                    FlutterFlowTheme.of(context).alternate,
-                                borderWidth: 2.0,
-                                borderRadius: 8.0,
-                                margin: EdgeInsetsDirectional.fromSTEB(
-                                    20.0, 4.0, 16.0, 4.0),
-                                hidesUnderline: true,
-                                isSearchable: false,
-                                isMultiSelect: false,
-                              ).animateOnPageLoad(animationsMap[
-                                  'dropDownOnPageLoadAnimation1']!),
+                                selectedColor: Colors.blue,
+                                backgroundColor: Colors.white,
+                                onConfirm: (values) {
+                                  setState(() {
+                                    _model.dropDownValue1 = values;
+                                  });
+                                },
+                              ),
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
@@ -667,8 +649,9 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                                       await AppointmentsRecord.collection
                                           .doc()
                                           .set(createAppointmentsRecordData(
-                                            appointmentType:
-                                                _model.dropDownValue1,
+                                            appointmentType: _model
+                                                .dropDownValue1
+                                                .join(', '),
                                             appointmentTime: _model.datePicked,
                                             appointmentName: _model
                                                 .personsNameController.text,
