@@ -43,6 +43,5 @@ export '/pages/appointment_details_copy/appointment_details_copy_widget.dart'
     show AppointmentDetailsCopyWidget;
 export '/edit_patient_infobyadmin/edit_patient_infobyadmin_widget.dart'
     show EditPatientInfobyadminWidget;
-export '/pages/notification_booking/notification_booking_widget.dart'
-    show NotificationBookingWidget;
+export '/pages/notification_booking/notification_booking_widget.dart';
 export '/pages/chatpage/chatpage_widget.dart' show ChatpageWidget;

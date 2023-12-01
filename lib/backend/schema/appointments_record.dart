@@ -106,6 +106,7 @@ class AppointmentsRecord extends FirestoreRecord {
     _phoneNumber = snapshotData['phone_number'] as String?;
     _upcoming = snapshotData['upcoming'] as bool?;
     _complete = snapshotData['complete'] as bool?;
+    _uid = reference.id;
   }
 
   static CollectionReference get collection =>

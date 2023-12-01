@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
-import 'package:stardent/pages/history/medical_history.dart';
 import 'package:stardent/pages/medical_history_admin/history_admin.dart';
 
 import '/admindashboard/admindashboard_widget.dart';
@@ -20,7 +19,7 @@ import 'setting3_model.dart';
 export 'setting3_model.dart';
 
 class Setting3Widget extends StatefulWidget {
-  const Setting3Widget({Key? key}) : super(key: key);
+  const Setting3Widget({super.key});
 
   @override
   _Setting3WidgetState createState() => _Setting3WidgetState();

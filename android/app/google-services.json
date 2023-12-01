@@ -1,13 +1,14 @@
 {
   "project_info": {
-    "project_number": "12094787925",
-    "project_id": "dentalclinic112-964b1",
-    "storage_bucket": "dentalclinic112-964b1.appspot.com"
+    "project_number": "670433190201",
+    "firebase_url": "https://asdqwe-18a92-default-rtdb.firebaseio.com",
+    "project_id": "asdqwe-18a92",
+    "storage_bucket": "asdqwe-18a92.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:12094787925:android:1f50994139ac5a5fb0dfdc",
+        "mobilesdk_app_id": "1:670433190201:android:5455e5b0ed89eaa6f688e8",
         "android_client_info": {
           "package_name": "com.flutterflow.healthai"
         }
@@ -15,7 +16,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC1IlokImOXKJFLDCbUFPBjhC63RkykS8s"
+          "current_key": "AIzaSyBzko4sCgxz9BQgO6dHLVEkhlPgnxD0Sag"
         }
       ],
       "services": {

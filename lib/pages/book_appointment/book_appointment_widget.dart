@@ -5,6 +5,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:provider/provider.dart';
 
+import '../../index.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/congrats/congrats_widget.dart';
@@ -38,6 +39,8 @@ class BookAppointmentWidget extends StatefulWidget {
 class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
     with TickerProviderStateMixin {
   late BookAppointmentModel _model;
+  int snackBarCount = 0;
+  bool notificationClicked = false;
 
   final animationsMap = {
     'textFieldOnPageLoadAnimation': AnimationInfo(
@@ -661,11 +664,49 @@ class _BookAppointmentWidgetState extends State<BookAppointmentWidget>
                                             appointmentSlot:
                                                 _model.dropDownValue2,
                                           ));
+// Show a SnackBar for the new appointment
+                                      if (snackBarCount < 2) {
+                                        WidgetsBinding.instance!
+                                            .addPostFrameCallback((_) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                  'Your appointment has been created successfully.'),
+                                              duration: Duration(seconds: 3),
+                                            ),
+                                          );
+                                        });
+                                        snackBarCount++;
+                                      }
+
+                                      // Create a NotificationBookingWidget instance
+                                      // ignore: use_build_context_synchronously
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              CongratsWidget(),
+                                              NotificationBookingWidget(
+                                            pushnotification:
+                                                null, // replace with your DocumentReference
+                                            message:
+                                                'Your appointment is confirmed', // replace with your message
+                                            name: _model.personsNameController
+                                                .text, // pass the name
+                                            slot: _model.dropDownValue2 ??
+                                                'Default Slot', // pass the slot
+                                            time: _model.datePicked ??
+                                                DateTime
+                                                    .now(), // pass the appointment time
+                                          ),
+                                        ),
+                                      );
+                                      // ignore: use_build_context_synchronously
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const CongratsWidget(),
                                         ),
                                       );
                                     },

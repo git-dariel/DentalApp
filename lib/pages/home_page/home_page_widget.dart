@@ -8,6 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:stardent/pages/notification_booking/notification_booking_widget.dart';
 
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
@@ -236,10 +237,8 @@ class _HomePageWidgetState extends State<HomePageWidget>
                     child: StreamBuilder<List<AppointmentsRecord>>(
                       stream: queryAppointmentsRecord(
                         queryBuilder: (appointmentsRecord) => appointmentsRecord
-                            .where(
-                              'appointmentPerson',
-                              isEqualTo: homePageUsersRecord.reference,
-                            )
+                            .where('appointmentPerson',
+                                isEqualTo: currentUserReference)
                             .orderBy('appointmentTime'),
                         singleRecord: true,
                       ),
@@ -257,17 +256,11 @@ class _HomePageWidgetState extends State<HomePageWidget>
                             ),
                           );
                         }
-                        List<AppointmentsRecord>
-                            welcomeMessageAppointmentsRecordList =
-                            snapshot.data!;
                         // Return an empty Container when the item does not exist.
                         if (snapshot.data!.isEmpty) {
                           return Container();
                         }
-                        final welcomeMessageAppointmentsRecord =
-                            welcomeMessageAppointmentsRecordList.isNotEmpty
-                                ? welcomeMessageAppointmentsRecordList.first
-                                : null;
+                        final appointmentsRecord = snapshot.data!.first;
                         return Row(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -283,45 +276,61 @@ class _HomePageWidgetState extends State<HomePageWidget>
                               ).animateOnPageLoad(
                                   animationsMap['textOnPageLoadAnimation1']!),
                             ),
-                            StreamBuilder<AppointmentsRecord>(
-                              stream: AppointmentsRecord.getDocument(
-                                  welcomeMessageAppointmentsRecord!.reference),
-                              builder: (context, snapshot) {
-                                // Customize what your widget looks like when it's loading.
-                                if (!snapshot.hasData) {
-                                  return Center(
-                                    child: SizedBox(
-                                      width: 40.0,
-                                      height: 40.0,
-                                      child: SpinKitRing(
-                                        color: FlutterFlowTheme.of(context)
-                                            .tertiary,
-                                        size: 40.0,
+                            badges.Badge(
+                              badgeContent: FutureBuilder<int>(
+                                future: _model.getAppointmentCount(),
+                                builder: (BuildContext context,
+                                    AsyncSnapshot<int> snapshot) {
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return CircularProgressIndicator();
+                                  } else if (snapshot.hasError) {
+                                    return Icon(Icons.error);
+                                  } else {
+                                    return Text(
+                                      '${snapshot.data}',
+                                      style: FlutterFlowTheme.of(context)
+                                          .titleSmall
+                                          .override(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.white,
+                                            fontSize: 11,
+                                          ),
+                                    );
+                                  }
+                                },
+                              ),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          NotificationBookingWidget(
+                                        message:
+                                            'Your appointment is successfully created.',
+                                        name:
+                                            appointmentsRecord.appointmentName,
+                                        slot:
+                                            appointmentsRecord.appointmentType,
+                                        time: appointmentsRecord
+                                                .appointmentTime ??
+                                            DateTime.now(),
+                                        pushnotification:
+                                            appointmentsRecord.reference,
                                       ),
                                     ),
                                   );
-                                }
-                                return badges.Badge(
-                                  badgeContent: Text(
-                                    '1',
-                                    style: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily: 'Outfit',
-                                          color: Colors.white,
-                                          fontSize: 11.0,
-                                        ),
-                                  ),
-                                  child: FaIcon(
-                                    FontAwesomeIcons.solidBell,
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryText,
-                                    size: 30.0,
-                                  ).animateOnPageLoad(animationsMap[
-                                      'iconOnPageLoadAnimation']!),
-                                );
-                              },
-                            ),
+                                },
+                                child: FaIcon(
+                                  FontAwesomeIcons.solidBell,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 30,
+                                ).animateOnPageLoad(
+                                    animationsMap['iconOnPageLoadAnimation']!),
+                              ),
+                            )
                           ],
                         );
                       },
